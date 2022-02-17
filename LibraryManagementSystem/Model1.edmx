@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LMSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AssessionMapping">
+          <Key>
+            <PropertyRef Name="AssessionID" />
+          </Key>
+          <Property Name="AssessionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookID" Type="int" />
+          <Property Name="Status" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="AuthorID" />
+          </Key>
+          <Property Name="AuthorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuthorName" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookName" Type="varchar" MaxLength="50" />
+          <Property Name="BookCategoryID" Type="int" />
+          <Property Name="AuthorID" Type="int" />
+          <Property Name="SubjectID" Type="int" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="BookCategory">
+          <Key>
+            <PropertyRef Name="BookCategoryID" />
+          </Key>
+          <Property Name="BookCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookCategoryName" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="BookIssueReturn">
+          <Key>
+            <PropertyRef Name="BookIssueReturnID" />
+          </Key>
+          <Property Name="BookIssueReturnID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberID" Type="int" />
+          <Property Name="AssessionID" Type="int" />
+          <Property Name="IssueDate" Type="date" />
+          <Property Name="DueDate" Type="date" />
+          <Property Name="ReturnDate" Type="date" />
+          <Property Name="LateDays" Type="int" />
+          <Property Name="FineAmount" Type="int" />
+          <Property Name="Status" Type="tinyint" />
+          <Property Name="StaffMemberID" Type="int" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Fine">
+          <Key>
+            <PropertyRef Name="FineID" />
+          </Key>
+          <Property Name="FineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LateDays" Type="int" />
+          <Property Name="MemberCategoryID" Type="int" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberName" Type="varchar" MaxLength="50" />
+          <Property Name="MemberCategoryID" Type="int" />
+          <Property Name="MemberAddress" Type="varchar" MaxLength="50" />
+          <Property Name="ContactNo" Type="bigint" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="MemberCategory">
+          <Key>
+            <PropertyRef Name="MemberCategoryID" />
+          </Key>
+          <Property Name="MemberCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberCategoryName" Type="varchar" MaxLength="50" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectName" Type="varchar" MaxLength="50" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_AssessionMapping_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="0..1" />
+          <End Role="AssessionMapping" Type="Self.AssessionMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="AssessionMapping">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="AuthorID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="AuthorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_BookCategory">
+          <End Role="BookCategory" Type="Self.BookCategory" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookCategory">
+              <PropertyRef Name="BookCategoryID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="BookCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookIssueReturn_AssessionMapping">
+          <End Role="AssessionMapping" Type="Self.AssessionMapping" Multiplicity="0..1" />
+          <End Role="BookIssueReturn" Type="Self.BookIssueReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessionMapping">
+              <PropertyRef Name="AssessionID" />
+            </Principal>
+            <Dependent Role="BookIssueReturn">
+              <PropertyRef Name="AssessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookIssueReturn_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="BookIssueReturn" Type="Self.BookIssueReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="BookIssueReturn">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fine_MemberCategory">
+          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="0..1" />
+          <End Role="Fine" Type="Self.Fine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="MemberCategoryID" />
+            </Principal>
+            <Dependent Role="Fine">
+              <PropertyRef Name="MemberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_MemberCategory">
+          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="0..1" />
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="MemberCategoryID" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="MemberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LMSDBModelStoreContainer">
+          <EntitySet Name="AssessionMapping" EntityType="Self.AssessionMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookCategory" EntityType="Self.BookCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookIssueReturn" EntityType="Self.BookIssueReturn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fine" EntityType="Self.Fine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberCategory" EntityType="Self.MemberCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AssessionMapping_Book" Association="Self.FK_AssessionMapping_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="AssessionMapping" EntitySet="AssessionMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Author" Association="Self.FK_Book_Author">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_BookCategory" Association="Self.FK_Book_BookCategory">
+            <End Role="BookCategory" EntitySet="BookCategory" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Subject" Association="Self.FK_Book_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookIssueReturn_AssessionMapping" Association="Self.FK_BookIssueReturn_AssessionMapping">
+            <End Role="AssessionMapping" EntitySet="AssessionMapping" />
+            <End Role="BookIssueReturn" EntitySet="BookIssueReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookIssueReturn_Member" Association="Self.FK_BookIssueReturn_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="BookIssueReturn" EntitySet="BookIssueReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fine_MemberCategory" Association="Self.FK_Fine_MemberCategory">
+            <End Role="MemberCategory" EntitySet="MemberCategory" />
+            <End Role="Fine" EntitySet="Fine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_MemberCategory" Association="Self.FK_Member_MemberCategory">
+            <End Role="MemberCategory" EntitySet="MemberCategory" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LMSDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AssessionMapping">
+          <Key>
+            <PropertyRef Name="AssessionID" />
+          </Key>
+          <Property Name="AssessionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookID" Type="Int32" />
+          <Property Name="Status" Type="Byte" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_AssessionMapping_Book" FromRole="AssessionMapping" ToRole="Book" />
+          <NavigationProperty Name="BookIssueReturn" Relationship="Self.FK_BookIssueReturn_AssessionMapping" FromRole="AssessionMapping" ToRole="BookIssueReturn" />
+        </EntityType>
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="AuthorID" />
+          </Key>
+          <Property Name="AuthorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuthorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Author" FromRole="Author" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BookCategoryID" Type="Int32" />
+          <Property Name="AuthorID" Type="Int32" />
+          <Property Name="SubjectID" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AssessionMapping" Relationship="Self.FK_AssessionMapping_Book" FromRole="Book" ToRole="AssessionMapping" />
+          <NavigationProperty Name="Author" Relationship="Self.FK_Book_Author" FromRole="Book" ToRole="Author" />
+          <NavigationProperty Name="BookCategory" Relationship="Self.FK_Book_BookCategory" FromRole="Book" ToRole="BookCategory" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_Book_Subject" FromRole="Book" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="BookCategory">
+          <Key>
+            <PropertyRef Name="BookCategoryID" />
+          </Key>
+          <Property Name="BookCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_BookCategory" FromRole="BookCategory" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="BookIssueReturn">
+          <Key>
+            <PropertyRef Name="BookIssueReturnID" />
+          </Key>
+          <Property Name="BookIssueReturnID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" />
+          <Property Name="AssessionID" Type="Int32" />
+          <Property Name="IssueDate" Type="DateTime" Precision="0" />
+          <Property Name="DueDate" Type="DateTime" Precision="0" />
+          <Property Name="ReturnDate" Type="DateTime" Precision="0" />
+          <Property Name="LateDays" Type="Int32" />
+          <Property Name="FineAmount" Type="Int32" />
+          <Property Name="Status" Type="Byte" />
+          <Property Name="StaffMemberID" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AssessionMapping" Relationship="Self.FK_BookIssueReturn_AssessionMapping" FromRole="BookIssueReturn" ToRole="AssessionMapping" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_BookIssueReturn_Member" FromRole="BookIssueReturn" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Fine">
+          <Key>
+            <PropertyRef Name="FineID" />
+          </Key>
+          <Property Name="FineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LateDays" Type="Int32" />
+          <Property Name="MemberCategoryID" Type="Int32" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MemberCategory" Relationship="Self.FK_Fine_MemberCategory" FromRole="Fine" ToRole="MemberCategory" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MemberCategoryID" Type="Int32" />
+          <Property Name="MemberAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNo" Type="Int64" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Byte" />
+          <NavigationProperty Name="BookIssueReturn" Relationship="Self.FK_BookIssueReturn_Member" FromRole="Member" ToRole="BookIssueReturn" />
+          <NavigationProperty Name="MemberCategory" Relationship="Self.FK_Member_MemberCategory" FromRole="Member" ToRole="MemberCategory" />
+        </EntityType>
+        <EntityType Name="MemberCategory">
+          <Key>
+            <PropertyRef Name="MemberCategoryID" />
+          </Key>
+          <Property Name="MemberCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Fine" Relationship="Self.FK_Fine_MemberCategory" FromRole="MemberCategory" ToRole="Fine" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_Member_MemberCategory" FromRole="MemberCategory" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Subject" FromRole="Subject" ToRole="Book" />
+        </EntityType>
+        <Association Name="FK_AssessionMapping_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="0..1" />
+          <End Role="AssessionMapping" Type="Self.AssessionMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="AssessionMapping">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookIssueReturn_AssessionMapping">
+          <End Role="AssessionMapping" Type="Self.AssessionMapping" Multiplicity="0..1" />
+          <End Role="BookIssueReturn" Type="Self.BookIssueReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessionMapping">
+              <PropertyRef Name="AssessionID" />
+            </Principal>
+            <Dependent Role="BookIssueReturn">
+              <PropertyRef Name="AssessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="AuthorID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="AuthorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_BookCategory">
+          <End Role="BookCategory" Type="Self.BookCategory" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookCategory">
+              <PropertyRef Name="BookCategoryID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="BookCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookIssueReturn_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="BookIssueReturn" Type="Self.BookIssueReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="BookIssueReturn">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fine_MemberCategory">
+          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="0..1" />
+          <End Role="Fine" Type="Self.Fine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="MemberCategoryID" />
+            </Principal>
+            <Dependent Role="Fine">
+              <PropertyRef Name="MemberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_MemberCategory">
+          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="0..1" />
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="MemberCategoryID" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="MemberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LMSDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AssessionMapping" EntityType="Self.AssessionMapping" />
+          <EntitySet Name="Author" EntityType="Self.Author" />
+          <EntitySet Name="Book" EntityType="Self.Book" />
+          <EntitySet Name="BookCategory" EntityType="Self.BookCategory" />
+          <EntitySet Name="BookIssueReturn" EntityType="Self.BookIssueReturn" />
+          <EntitySet Name="Fine" EntityType="Self.Fine" />
+          <EntitySet Name="Member" EntityType="Self.Member" />
+          <EntitySet Name="MemberCategory" EntityType="Self.MemberCategory" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" />
+          <AssociationSet Name="FK_AssessionMapping_Book" Association="Self.FK_AssessionMapping_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="AssessionMapping" EntitySet="AssessionMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookIssueReturn_AssessionMapping" Association="Self.FK_BookIssueReturn_AssessionMapping">
+            <End Role="AssessionMapping" EntitySet="AssessionMapping" />
+            <End Role="BookIssueReturn" EntitySet="BookIssueReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Author" Association="Self.FK_Book_Author">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_BookCategory" Association="Self.FK_Book_BookCategory">
+            <End Role="BookCategory" EntitySet="BookCategory" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Subject" Association="Self.FK_Book_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookIssueReturn_Member" Association="Self.FK_BookIssueReturn_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="BookIssueReturn" EntitySet="BookIssueReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fine_MemberCategory" Association="Self.FK_Fine_MemberCategory">
+            <End Role="MemberCategory" EntitySet="MemberCategory" />
+            <End Role="Fine" EntitySet="Fine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_MemberCategory" Association="Self.FK_Member_MemberCategory">
+            <End Role="MemberCategory" EntitySet="MemberCategory" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LMSDBModelStoreContainer" CdmEntityContainer="LMSDBEntities1">
+          <EntitySetMapping Name="AssessionMapping">
+            <EntityTypeMapping TypeName="LMSDBModel.AssessionMapping">
+              <MappingFragment StoreEntitySet="AssessionMapping">
+                <ScalarProperty Name="AssessionID" ColumnName="AssessionID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Author">
+            <EntityTypeMapping TypeName="LMSDBModel.Author">
+              <MappingFragment StoreEntitySet="Author">
+                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Book">
+            <EntityTypeMapping TypeName="LMSDBModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="BookCategoryID" ColumnName="BookCategoryID" />
+                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookCategory">
+            <EntityTypeMapping TypeName="LMSDBModel.BookCategory">
+              <MappingFragment StoreEntitySet="BookCategory">
+                <ScalarProperty Name="BookCategoryID" ColumnName="BookCategoryID" />
+                <ScalarProperty Name="BookCategoryName" ColumnName="BookCategoryName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookIssueReturn">
+            <EntityTypeMapping TypeName="LMSDBModel.BookIssueReturn">
+              <MappingFragment StoreEntitySet="BookIssueReturn">
+                <ScalarProperty Name="BookIssueReturnID" ColumnName="BookIssueReturnID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="AssessionID" ColumnName="AssessionID" />
+                <ScalarProperty Name="IssueDate" ColumnName="IssueDate" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+                <ScalarProperty Name="LateDays" ColumnName="LateDays" />
+                <ScalarProperty Name="FineAmount" ColumnName="FineAmount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StaffMemberID" ColumnName="StaffMemberID" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fine">
+            <EntityTypeMapping TypeName="LMSDBModel.Fine">
+              <MappingFragment StoreEntitySet="Fine">
+                <ScalarProperty Name="FineID" ColumnName="FineID" />
+                <ScalarProperty Name="LateDays" ColumnName="LateDays" />
+                <ScalarProperty Name="MemberCategoryID" ColumnName="MemberCategoryID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member">
+            <EntityTypeMapping TypeName="LMSDBModel.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="MemberCategoryID" ColumnName="MemberCategoryID" />
+                <ScalarProperty Name="MemberAddress" ColumnName="MemberAddress" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberCategory">
+            <EntityTypeMapping TypeName="LMSDBModel.MemberCategory">
+              <MappingFragment StoreEntitySet="MemberCategory">
+                <ScalarProperty Name="MemberCategoryID" ColumnName="MemberCategoryID" />
+                <ScalarProperty Name="MemberCategoryName" ColumnName="MemberCategoryName" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subject">
+            <EntityTypeMapping TypeName="LMSDBModel.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

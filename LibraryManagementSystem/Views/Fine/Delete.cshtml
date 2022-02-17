@@ -1,0 +1,65 @@
+﻿@model LibraryManagementSystem.Models.FineModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>FineModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FineID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FineID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LateDays)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LateDays)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemberCategoryID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemberCategoryID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remarks)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

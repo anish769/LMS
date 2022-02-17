@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8ef71a1bd47f469a817828e4eda7e58b" Name="Diagram1">
+        <EntityTypeShape EntityType="LMSDBModel.AssessionMapping" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMSDBModel.Author" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMSDBModel.Book" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMSDBModel.BookCategory" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMSDBModel.BookIssueReturn" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMSDBModel.Fine" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMSDBModel.Member" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMSDBModel.MemberCategory" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMSDBModel.Subject" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <AssociationConnector Association="LMSDBModel.FK_AssessionMapping_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="LMSDBModel.FK_BookIssueReturn_AssessionMapping" ManuallyRouted="false" />
+        <AssociationConnector Association="LMSDBModel.FK_Book_Author" ManuallyRouted="false" />
+        <AssociationConnector Association="LMSDBModel.FK_Book_BookCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="LMSDBModel.FK_Book_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="LMSDBModel.FK_BookIssueReturn_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="LMSDBModel.FK_Fine_MemberCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="LMSDBModel.FK_Member_MemberCategory" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

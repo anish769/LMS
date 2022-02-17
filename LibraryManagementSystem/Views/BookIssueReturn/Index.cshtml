@@ -1,0 +1,22 @@
+﻿@model LibraryManagementSystem.Models.MemberModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Html.RenderPartial("_SearchPartial", Model);
+    Html.RenderPartial("_IssueBook", Model.ToIssueBookModel);
+
+    if(Model.IssuedBookList.Count>0)
+    {
+        Html.RenderPartial("_ListIssuedBook", Model.IssuedBookList);
+
+    }
+
+}
+
+
+
+
+
+
+

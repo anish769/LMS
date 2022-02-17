@@ -1,0 +1,69 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.BookIssueReturnModel>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DueDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.LateDays)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FineAmount)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookDescription)
+        </td>
+
+        <td>
+            @item.IssueDate.Value.ToShortDateString()
+            @*@Html.DisplayFor(modelItem => item.IssueDate)*@
+        </td>
+
+        <td>
+            @item.DueDate.Value.ToShortDateString()
+            @*@Html.DisplayFor(modelItem => item.DueDate)*@
+        </td>
+        <td>
+            @item.ReturnDate.Value.ToShortDateString()
+            @*@Html.DisplayFor(modelItem => item.ReturnDate)*@
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LateDays)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FineAmount)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Remarks)
+        </td>
+        <td>
+            @Html.ActionLink("Return Books", "Edit", new { id=item.AssessionID,memberID=item.MemberID }) |
+            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+        </td>
+    </tr>
+}
+
+</table>

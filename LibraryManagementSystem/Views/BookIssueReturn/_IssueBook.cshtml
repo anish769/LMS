@@ -1,0 +1,68 @@
+﻿@model LibraryManagementSystem.Models.BookModel
+
+
+@using (Html.BeginForm("Issue", "BookIssueReturn", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Book Issue</h4>
+    <hr />
+    @Html.HiddenFor(model => model.MemberId)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("No Of Book Issued", htmlAttributes: new { @class = "control-label col-md-11" })
+
+            </div>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.NoOfIssuedBook, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.NoOfIssuedBook, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.AssessionID, htmlAttributes: new { @class = "control-label col-md-11" })
+
+            </div>
+            <div class="col-md-6">
+                @Html.DropDownListFor(x => Model.AssessionID, new SelectList(Model.BookIssueList, "Value", "Text"), htmlAttributes: new { @class = "form-control", @id = "Region" })
+                @Html.ValidationMessageFor(model => model.AssessionID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            </div>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Issue" class="btn btn-primary" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <h3>@ViewBag.ResultMessage</h3>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
